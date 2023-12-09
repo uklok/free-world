@@ -2,7 +2,7 @@ import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 
 /**
- * Deploys a contract named "YourContract" using the deployer account and
+ * Deploys a contract named "FreeWorld" using the deployer account and
  * constructor arguments set to the deployer address
  *
  * @param hre HardhatRuntimeEnvironment object.
@@ -21,7 +21,8 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
 
-  await deploy("YourContract", {
+  // Deploy the registry contract
+  await deploy("FreeWorldRegistry", {
     from: deployer,
     // Contract constructor arguments
     args: [deployer],
@@ -31,12 +32,37 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
     autoMine: true,
   });
 
+  const FreeWorldRegistry = await hre.ethers.getContract("FreeWorldRegistry", deployer);
+  console.log("FreeWorldRegistry contract deployed | ", FreeWorldRegistry.address);
+
+  await deploy("FreeWorld", {
+    from: deployer,
+    // Contract constructor arguments
+    args: [deployer, FreeWorldRegistry.address],
+    log: true,
+    // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
+    // automatically mining the contract deployment transaction. There is no effect on live networks.
+    autoMine: true,
+  });
+
   // Get the deployed contract
-  // const yourContract = await hre.ethers.getContract("YourContract", deployer);
+  const FreeWorld = await hre.ethers.getContract("FreeWorld");
+  console.log("FreeWorld contract deployed | ", FreeWorld.address);
+
+  const currentRegistryOwner = await FreeWorldRegistry.owner();
+  if (currentRegistryOwner !== FreeWorld.address) {
+    console.log(`Registry ownership needs to be transferred to main contract | owner: ${currentRegistryOwner}`);
+
+    const tx = await FreeWorldRegistry.transferOwnership(FreeWorld.address);
+    console.log(`Transferring registry ownership to main contract | tx: ${tx.hash}`);
+
+    await tx.wait();
+    console.log(`Registry ownership transferred successfully | owner: ${await FreeWorldRegistry.owner()}`);
+  }
 };
 
 export default deployYourContract;
 
 // Tags are useful if you have multiple deploy files and only want to run one of them.
 // e.g. yarn deploy --tags YourContract
-deployYourContract.tags = ["YourContract"];
+deployYourContract.tags = ["FreeWorld"];
