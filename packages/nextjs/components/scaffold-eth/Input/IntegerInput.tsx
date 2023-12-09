@@ -6,6 +6,13 @@ type IntegerInputProps = CommonInputProps<string | bigint> & {
   disableMultiplyBy1e18?: boolean;
 };
 
+const decimalToBigInt = (value = "0") => BigInt(Math.round(Number(`0.${value}`) * 10 ** 18));
+const wholeToBigInt = (value = "0") => BigInt(value) * 10n ** 18n;
+const toBigInt = (value = "0") => {
+  const [whole, decimal = "0"] = `${value}`.split(".");
+  return wholeToBigInt(whole) + decimalToBigInt(decimal);
+};
+
 export const IntegerInput = ({
   value,
   onChange,
@@ -17,13 +24,13 @@ export const IntegerInput = ({
 }: IntegerInputProps) => {
   const [inputError, setInputError] = useState(false);
   const multiplyBy1e18 = useCallback(() => {
-    if (!value) {
-      return;
-    }
+    if (!value) return;
+
     if (typeof value === "bigint") {
       return onChange(value * 10n ** 18n);
     }
-    return onChange(BigInt(Math.round(Number(value) * 10 ** 18)));
+
+    return onChange(toBigInt(value));
   }, [onChange, value]);
 
   useEffect(() => {
