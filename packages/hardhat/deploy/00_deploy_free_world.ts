@@ -33,6 +33,7 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   });
 
   const FreeWorldRegistry = await hre.ethers.getContract("FreeWorldRegistry", deployer);
+  const verifierRole = await FreeWorldRegistry.VERIFIER_ROLE();
   console.log("FreeWorldRegistry contract deployed | ", FreeWorldRegistry.address);
 
   await deploy("FreeWorld", {
@@ -49,15 +50,17 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   const FreeWorld = await hre.ethers.getContract("FreeWorld");
   console.log("FreeWorld contract deployed | ", FreeWorld.address);
 
-  const currentRegistryOwner = await FreeWorldRegistry.owner();
-  if (currentRegistryOwner !== FreeWorld.address) {
-    console.log(`Registry ownership needs to be transferred to main contract | owner: ${currentRegistryOwner}`);
+  const contractAddress = FreeWorld.address;
+  let isVerifier = await FreeWorldRegistry.hasRole(verifierRole, contractAddress);
+  if (!isVerifier) {
+    console.log(`Main contract ${contractAddress} has VERIFIER_ROLE:${isVerifier} in registry contract`);
 
-    const tx = await FreeWorldRegistry.transferOwnership(FreeWorld.address);
-    console.log(`Transferring registry ownership to main contract | tx: ${tx.hash}`);
-
+    // Grant the main contract as VERIFIER_ROLE in registry contract
+    const tx = await FreeWorldRegistry.grantRole(verifierRole, contractAddress);
     await tx.wait();
-    console.log(`Registry ownership transferred successfully | owner: ${await FreeWorldRegistry.owner()}`);
+
+    isVerifier = await FreeWorldRegistry.hasRole(verifierRole, contractAddress);
+    console.log(`Main contract ${contractAddress} has VERIFIER_ROLE:${isVerifier} in registry contract`);
   }
 };
 

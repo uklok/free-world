@@ -3,15 +3,14 @@ pragma solidity ^0.8.20;
 
 import "./interfaces/IFreeWorld.sol";
 import "./FreeWorldRegistry.sol";
+
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
 
-import "hardhat/console.sol";
-
 contract FreeWorld is IFreeWorld, ERC20, ERC20Burnable, AccessControl, ERC20Permit {
-//    bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
+    bytes32 public constant VERIFIER_ROLE = keccak256("VERIFIER_ROLE");
 
     uint256 public constant MINT_PRICE = 0.00001 ether;
     uint256 public constant MAX_SUPPLY = 3_000_000_000 ether;
@@ -69,5 +68,10 @@ contract FreeWorld is IFreeWorld, ERC20, ERC20Burnable, AccessControl, ERC20Perm
      */
     function mint(uint256 amount) public payable {
         mintTo(_msgSender(), amount);
+    }
+
+// ---------------------------------------------------------------------------------------------------------------------
+    function verifyUser(address userAddress) public onlyRole(getRoleAdmin(VERIFIER_ROLE)) {
+        registry.verify(userAddress);
     }
 }
