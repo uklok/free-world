@@ -2,7 +2,7 @@
 pragma solidity ^0.8.20;
 
 import "./interfaces/IFreeWorld.sol";
-import "./FreeWorldRegistry.sol";
+import "./FreeWorldUserRegistry.sol";
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
@@ -18,14 +18,14 @@ contract FreeWorld is IFreeWorld, ERC20, ERC20Burnable, AccessControl, ERC20Perm
     uint256 public constant MAX_SUPPLY_PER_MINT = 3_000_000 ether;
     uint256 private _totalMinted = 0;
 
-    FreeWorldRegistry public immutable registry;
+    FreeWorldUserRegistry public immutable registry;
 
     constructor(address defaultAdmin, address _registry)
     ERC20("Free World", "FWC")
     ERC20Permit("Free World")
     {
         _grantRole(DEFAULT_ADMIN_ROLE, defaultAdmin);
-        registry = _registry != address(0) ? FreeWorldRegistry(_registry): new FreeWorldRegistry(address(this));
+        registry = _registry != address(0) ? FreeWorldUserRegistry(_registry): new FreeWorldUserRegistry(address(this));
     }
 
     /**

@@ -22,7 +22,7 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   const { deploy } = hre.deployments;
 
   // Deploy the registry contract
-  await deploy("FreeWorldRegistry", {
+  await deploy("FreeWorldUserRegistry", {
     from: deployer,
     // Contract constructor arguments
     args: [deployer],
@@ -32,14 +32,14 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
     autoMine: true,
   });
 
-  const FreeWorldRegistry = await hre.ethers.getContract("FreeWorldRegistry", deployer);
-  const verifierRole = await FreeWorldRegistry.VERIFIER_ROLE();
-  console.log("FreeWorldRegistry contract deployed | ", FreeWorldRegistry.address);
+  const UserRegistry = await hre.ethers.getContract("FreeWorldUserRegistry", deployer);
+  const verifierRole = await UserRegistry.VERIFIER_ROLE();
+  console.log("FreeWorldUserRegistry contract deployed | ", UserRegistry.address);
 
   await deploy("FreeWorld", {
     from: deployer,
     // Contract constructor arguments
-    args: [deployer, FreeWorldRegistry.address],
+    args: [deployer, UserRegistry.address],
     log: true,
     // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
     // automatically mining the contract deployment transaction. There is no effect on live networks.
@@ -51,15 +51,15 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   console.log("FreeWorld contract deployed | ", FreeWorld.address);
 
   const contractAddress = FreeWorld.address;
-  let isVerifier = await FreeWorldRegistry.hasRole(verifierRole, contractAddress);
+  let isVerifier = await UserRegistry.hasRole(verifierRole, contractAddress);
   if (!isVerifier) {
     console.log(`Main contract ${contractAddress} has VERIFIER_ROLE:${isVerifier} in registry contract`);
 
     // Grant the main contract as VERIFIER_ROLE in registry contract
-    const tx = await FreeWorldRegistry.grantRole(verifierRole, contractAddress);
+    const tx = await UserRegistry.grantRole(verifierRole, contractAddress);
     await tx.wait();
 
-    isVerifier = await FreeWorldRegistry.hasRole(verifierRole, contractAddress);
+    isVerifier = await UserRegistry.hasRole(verifierRole, contractAddress);
     console.log(`Main contract ${contractAddress} has VERIFIER_ROLE:${isVerifier} in registry contract`);
   }
 };

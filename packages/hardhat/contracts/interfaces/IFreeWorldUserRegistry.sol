@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.0;
 
-interface IFreeWorldRegistry {
+interface IFreeWorldUserRegistry {
     event UserRegistered(address indexed user);
     event UserUnregistered(address indexed user);
     event UserVerified(address indexed user);

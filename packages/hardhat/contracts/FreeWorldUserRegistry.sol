@@ -1,12 +1,12 @@
 //SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0 <0.9.0;
 
-import "./interfaces/IFreeWorldRegistry.sol";
+import "./interfaces/IFreeWorldUserRegistry.sol";
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 
-contract FreeWorldRegistry is IFreeWorldRegistry, ERC721, AccessControl {
+contract FreeWorldUserRegistry is IFreeWorldUserRegistry, ERC721, AccessControl {
     bytes32 public constant VERIFIER_ROLE = keccak256("VERIFIER_ROLE");
 
     mapping(address => bool) private registered;
@@ -93,6 +93,7 @@ contract FreeWorldRegistry is IFreeWorldRegistry, ERC721, AccessControl {
         verified[to] = true;
         emit UserVerified(to);
 
+        // TODO: Generate a NFT data for the user. The NFT will be minted using Chainlink Functions to perform the DALL-E image generation.
         _safeMint(to, _nextTokenId++);
         minted[to] = true;
     }
