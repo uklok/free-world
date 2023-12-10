@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { InheritanceTooltip } from "./InheritanceTooltip";
 import { Abi, AbiFunction } from "abitype";
+import { signERC2612Permit } from "eth-permit";
 import { Address, TransactionReceipt } from "viem";
 import { useContractWrite, useNetwork, useWaitForTransaction } from "wagmi";
 import {
@@ -94,6 +95,36 @@ export const WriteOnlyFunctionForm = ({
         <p className="font-medium my-0 break-words">
           {abiFunction.name}
           <InheritanceTooltip inheritedFrom={inheritedFrom} />
+          {abiFunction.name === "permit" && (
+            <button
+              className={`btn btn-secondary btn-sm normal-case font-thin bg-base-100`}
+              onClick={async () => {
+                const [owner, spender, value, expire] = getParsedContractFunctionArgs(form);
+
+                const { deadline, v, r, s } = await signERC2612Permit(
+                  chain,
+                  contractAddress,
+                  owner,
+                  spender,
+                  value,
+                  expire,
+                );
+
+                const signature = { deadline, v, r, s } as any;
+                const signatureKeys = Object.keys(signature);
+
+                const updatedForm = Object.entries(form).reduce((updatedForm, [key, value]) => {
+                  const [fnName, attr] = key.split("_");
+                  updatedForm[key] = signatureKeys.includes(attr) ? signature[attr] : value;
+                  return updatedForm;
+                }, {} as any);
+
+                setForm(updatedForm);
+              }}
+            >
+              SIGN
+            </button>
+          )}
         </p>
         {inputs}
         {abiFunction.stateMutability === "payable" ? (
