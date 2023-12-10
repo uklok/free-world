@@ -36,10 +36,24 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   const verifierRole = await UserRegistry.VERIFIER_ROLE();
   console.log("FreeWorldUserRegistry contract deployed | ", UserRegistry.address);
 
+  await deploy("FreeWorldElectionRegistry", {
+    from: deployer,
+    // Contract constructor arguments
+    args: [deployer],
+    log: true,
+    // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
+    // automatically mining the contract deployment transaction. There is no effect on live networks.
+    autoMine: true,
+  });
+
+  const ElectionRegistry = await hre.ethers.getContract("FreeWorldElectionRegistry", deployer);
+  const managerRole = await ElectionRegistry.MANAGER_ROLE();
+  console.log("FreeWorldElectionRegistry contract deployed | ", ElectionRegistry.address);
+
   await deploy("FreeWorld", {
     from: deployer,
     // Contract constructor arguments
-    args: [deployer, UserRegistry.address],
+    args: [deployer, UserRegistry.address, ElectionRegistry.address],
     log: true,
     // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
     // automatically mining the contract deployment transaction. There is no effect on live networks.
@@ -52,15 +66,28 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
 
   const contractAddress = FreeWorld.address;
   let isVerifier = await UserRegistry.hasRole(verifierRole, contractAddress);
+  let isCreator = await ElectionRegistry.hasRole(managerRole, contractAddress);
+
   if (!isVerifier) {
-    console.log(`Main contract ${contractAddress} has VERIFIER_ROLE:${isVerifier} in registry contract`);
+    console.log(`Main contract ${contractAddress} has VERIFIER_ROLE:${isVerifier} in users registry contract`);
 
     // Grant the main contract as VERIFIER_ROLE in registry contract
-    const tx = await UserRegistry.grantRole(verifierRole, contractAddress);
+    const tx = await UserRegistry.setParent(contractAddress);
     await tx.wait();
 
     isVerifier = await UserRegistry.hasRole(verifierRole, contractAddress);
-    console.log(`Main contract ${contractAddress} has VERIFIER_ROLE:${isVerifier} in registry contract`);
+    console.log(`Main contract ${contractAddress} has VERIFIER_ROLE:${isVerifier} in users registry contract`);
+  }
+
+  if (!isCreator) {
+    console.log(`Main contract ${contractAddress} has CREATOR_ROLE:${isCreator} in elections registry contract`);
+
+    // Grant the main contract as CREATOR_ROLE in registry contract
+    const tx = await ElectionRegistry.setParent(contractAddress);
+    await tx.wait();
+
+    isCreator = await ElectionRegistry.hasRole(managerRole, contractAddress);
+    console.log(`Main contract ${contractAddress} has CREATOR_ROLE:${isCreator} in elections registry contract`);
   }
 };
 
