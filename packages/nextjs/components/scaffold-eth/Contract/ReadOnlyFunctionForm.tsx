@@ -11,6 +11,7 @@ import {
   getParsedContractFunctionArgs,
   getParsedError,
 } from "~~/components/scaffold-eth";
+import { MessageSigner, hasMessageSignerFields } from "~~/components/scaffold-eth/Contract/MessageSigner";
 import { notification } from "~~/utils/scaffold-eth";
 
 type ReadOnlyFunctionFormProps = {
@@ -62,6 +63,7 @@ export const ReadOnlyFunctionForm = ({
       <p className="font-medium my-0 break-words">
         {abiFunction.name}
         <InheritanceTooltip inheritedFrom={inheritedFrom} />
+        {hasMessageSignerFields(form) && <MessageSigner form={form} setForm={setForm} />}
       </p>
       {inputElements}
       <div className="flex justify-between gap-2 flex-wrap">
