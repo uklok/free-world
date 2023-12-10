@@ -76,6 +76,15 @@ const getParsedContractFunctionArgs = (form: Record<string, any>) => {
   return parsedArguments;
 };
 
+const getContractFunctionArgsMap = (form: Record<string, any>) => {
+  const keys = Object.keys(form);
+  return keys.reduce((argsMap, key) => {
+    const arg = key.split("_")[1];
+    argsMap[arg] = key;
+    return argsMap;
+  }, {} as Record<string, string>);
+};
+
 const getInitialFormState = (abiFunction: AbiFunction) => {
   const initialForm: Record<string, any> = {};
   if (!abiFunction.inputs) return initialForm;
@@ -86,4 +95,10 @@ const getInitialFormState = (abiFunction: AbiFunction) => {
   return initialForm;
 };
 
-export { getFunctionInputKey, getInitialFormState, getParsedContractFunctionArgs, getParsedError };
+export {
+  getFunctionInputKey,
+  getInitialFormState,
+  getParsedContractFunctionArgs,
+  getParsedError,
+  getContractFunctionArgsMap,
+};
