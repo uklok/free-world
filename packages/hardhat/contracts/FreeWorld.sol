@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.8.0 <0.9.0;
+pragma solidity ^0.8.18;
 
 import "./interfaces/IFreeWorld.sol";
 import {IFreeWorldUserRegistry} from "./interfaces/IFreeWorldUserRegistry.sol";
@@ -32,7 +32,7 @@ contract FreeWorld is IFreeWorld, ERC20, ERC20Burnable, AccessControl, ERC20Perm
     mapping(address => uint256) public activeElections;
     address[] public deployedElections;
 
-    constructor(address defaultAdmin, address _users, address _elections)
+    constructor(address defaultAdmin, address payable _users, address payable _elections)
     ERC20("Free World", "FWC")
     ERC20Permit("Free World")
     {
@@ -192,4 +192,11 @@ contract FreeWorld is IFreeWorld, ERC20, ERC20Burnable, AccessControl, ERC20Perm
         return token.cost;
     }
 
+// ---------------------------------------------------------------------------------------------------------------------
+    function withdraw(address to) public onlyRole(DEFAULT_ADMIN_ROLE) {
+        uint256 balance = address(this).balance;
+        payable(to).transfer(balance);
+    }
+
+    receive() external payable {}
 }

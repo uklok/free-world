@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     FreeWorld: {
-      address: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+      address: "0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0",
       abi: [
         {
           inputs: [
@@ -17,12 +17,12 @@ const deployedContracts = {
               type: "address",
             },
             {
-              internalType: "address",
+              internalType: "address payable",
               name: "_users",
               type: "address",
             },
             {
-              internalType: "address",
+              internalType: "address payable",
               name: "_elections",
               type: "address",
             },
@@ -1305,21 +1305,47 @@ const deployedContracts = {
           stateMutability: "nonpayable",
           type: "function",
         },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+          ],
+          name: "withdraw",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          stateMutability: "payable",
+          type: "receive",
+        },
       ],
       inheritedFunctions: {
         mint: "contracts/interfaces/IFreeWorld.sol",
         mintTo: "contracts/interfaces/IFreeWorld.sol",
-        allowance: "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol",
-        approve: "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol",
-        balanceOf: "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol",
-        decimals: "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol",
+        allowance:
+          "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol",
+        approve:
+          "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol",
+        balanceOf:
+          "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol",
+        decimals:
+          "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol",
         name: "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol",
-        symbol: "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol",
-        totalSupply: "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol",
-        transfer: "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol",
-        transferFrom: "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol",
+        symbol:
+          "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol",
+        totalSupply:
+          "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol",
+        transfer:
+          "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol",
+        transferFrom:
+          "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol",
         burn: "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol",
-        burnFrom: "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol",
+        burnFrom:
+          "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol",
         DEFAULT_ADMIN_ROLE: "@openzeppelin/contracts/access/AccessControl.sol",
         getRoleAdmin: "@openzeppelin/contracts/access/AccessControl.sol",
         grantRole: "@openzeppelin/contracts/access/AccessControl.sol",
@@ -1327,14 +1353,18 @@ const deployedContracts = {
         renounceRole: "@openzeppelin/contracts/access/AccessControl.sol",
         revokeRole: "@openzeppelin/contracts/access/AccessControl.sol",
         supportsInterface: "@openzeppelin/contracts/access/AccessControl.sol",
-        DOMAIN_SEPARATOR: "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol",
-        eip712Domain: "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol",
-        nonces: "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol",
-        permit: "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol",
+        DOMAIN_SEPARATOR:
+          "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol",
+        eip712Domain:
+          "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol",
+        nonces:
+          "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol",
+        permit:
+          "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol",
       },
     },
     FreeWorldElectionRegistry: {
-      address: "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+      address: "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e",
       abi: [
         {
           inputs: [
@@ -2158,7 +2188,7 @@ const deployedContracts = {
           name: "parent",
           outputs: [
             {
-              internalType: "address",
+              internalType: "address payable",
               name: "",
               type: "address",
             },
@@ -2287,7 +2317,7 @@ const deployedContracts = {
         {
           inputs: [
             {
-              internalType: "address",
+              internalType: "address payable",
               name: "parentAddress",
               type: "address",
             },
@@ -2398,12 +2428,14 @@ const deployedContracts = {
                       type: "uint256",
                     },
                     {
-                      internalType: "enum IFreeWorldElectionRegistry.FWOMintProcess",
+                      internalType:
+                        "enum IFreeWorldElectionRegistry.FWOMintProcess",
                       name: "mintProcess",
                       type: "uint8",
                     },
                     {
-                      internalType: "enum IFreeWorldElectionRegistry.FWOMintType",
+                      internalType:
+                        "enum IFreeWorldElectionRegistry.FWOMintType",
                       name: "mintType",
                       type: "uint8",
                     },
@@ -2607,7 +2639,8 @@ const deployedContracts = {
                   type: "uint256",
                 },
                 {
-                  internalType: "enum IFreeWorldElectionRegistry.FWOMintProcess",
+                  internalType:
+                    "enum IFreeWorldElectionRegistry.FWOMintProcess",
                   name: "mintProcess",
                   type: "uint8",
                 },
@@ -2625,6 +2658,23 @@ const deployedContracts = {
           stateMutability: "view",
           type: "function",
         },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+          ],
+          name: "withdraw",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          stateMutability: "payable",
+          type: "receive",
+        },
       ],
       inheritedFunctions: {
         create: "contracts/interfaces/IFreeWorldElectionRegistry.sol",
@@ -2633,21 +2683,34 @@ const deployedContracts = {
         remove: "contracts/interfaces/IFreeWorldElectionRegistry.sol",
         update: "contracts/interfaces/IFreeWorldElectionRegistry.sol",
         verify: "contracts/interfaces/IFreeWorldElectionRegistry.sol",
-        approve: "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
-        balanceOf: "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
-        getApproved: "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
-        isApprovedForAll: "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
+        approve:
+          "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
+        balanceOf:
+          "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
+        getApproved:
+          "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
+        isApprovedForAll:
+          "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
         name: "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
-        ownerOf: "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
-        safeTransferFrom: "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
-        setApprovalForAll: "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
+        ownerOf:
+          "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
+        safeTransferFrom:
+          "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
+        setApprovalForAll:
+          "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
         supportsInterface: "@openzeppelin/contracts/access/AccessControl.sol",
-        symbol: "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
-        tokenURI: "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
-        transferFrom: "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
-        tokenByIndex: "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
-        tokenOfOwnerByIndex: "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
-        totalSupply: "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
+        symbol:
+          "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
+        tokenURI:
+          "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
+        transferFrom:
+          "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
+        tokenByIndex:
+          "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
+        tokenOfOwnerByIndex:
+          "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
+        totalSupply:
+          "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
         DEFAULT_ADMIN_ROLE: "@openzeppelin/contracts/access/AccessControl.sol",
         getRoleAdmin: "@openzeppelin/contracts/access/AccessControl.sol",
         grantRole: "@openzeppelin/contracts/access/AccessControl.sol",
@@ -2657,7 +2720,7 @@ const deployedContracts = {
       },
     },
     FreeWorldUserRegistry: {
-      address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      address: "0x610178dA211FEF7D417bC0e6FeD39F05609AD788",
       abi: [
         {
           inputs: [
@@ -3280,7 +3343,7 @@ const deployedContracts = {
           name: "parent",
           outputs: [
             {
-              internalType: "address",
+              internalType: "address payable",
               name: "",
               type: "address",
             },
@@ -3403,7 +3466,7 @@ const deployedContracts = {
         {
           inputs: [
             {
-              internalType: "address",
+              internalType: "address payable",
               name: "parentAddress",
               type: "address",
             },
@@ -3519,6 +3582,23 @@ const deployedContracts = {
           outputs: [],
           stateMutability: "nonpayable",
           type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+          ],
+          name: "withdraw",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          stateMutability: "payable",
+          type: "receive",
         },
       ],
       inheritedFunctions: {

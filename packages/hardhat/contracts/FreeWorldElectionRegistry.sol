@@ -1,5 +1,5 @@
 //SPDX-License-Identifier: MIT
-pragma solidity >=0.8.0 <0.9.0;
+pragma solidity ^0.8.18;
 
 import "./interfaces/IFreeWorldElectionRegistry.sol";
 import "./FreeWorld.sol";
@@ -30,11 +30,11 @@ contract FreeWorldElectionRegistry is IFreeWorldElectionRegistry,
         return "https://ipfs.io/ipfs/";
     }
 
-    function parent() external view returns (address){
-        return address(_fwc);
+    function parent() external view returns (address payable) {
+        return payable(_fwc);
     }
 
-    function setParent(address parentAddress) external onlyRole(DEFAULT_ADMIN_ROLE) {
+    function setParent(address payable parentAddress) external onlyRole(DEFAULT_ADMIN_ROLE) {
         _fwc = FreeWorld(parentAddress);
         _grantRole(MANAGER_ROLE, parentAddress);
     }
@@ -57,9 +57,10 @@ contract FreeWorldElectionRegistry is IFreeWorldElectionRegistry,
      */
     function create(bytes calldata data, bytes calldata signature, string memory uri) external onlyRole(MANAGER_ROLE) returns (uint256, uint256){
         FWODetails memory details = verify(data, signature);
+        address userAddress = tx.origin;
 
         uint256 tokenId = _nextTokenId++;
-        _safeMint(tx.origin, tokenId);
+        _safeMint(userAddress, tokenId);
         _setTokenURI(tokenId, uri);
 
         uint256 cost = _getDeployCost(details);
@@ -70,7 +71,7 @@ contract FreeWorldElectionRegistry is IFreeWorldElectionRegistry,
         token.contractAddress = address(0);
         token.cost = cost;
 
-        emit FWOCreated(msg.sender, tokenId);
+        emit FWOCreated(userAddress, tokenId);
         return (cost, tokenId);
     }
 
@@ -344,4 +345,12 @@ contract FreeWorldElectionRegistry is IFreeWorldElectionRegistry,
     {
         return super.supportsInterface(interfaceId);
     }
+
+// ---------------------------------------------------------------------------------------------------------------------
+    function withdraw(address to) public onlyRole(DEFAULT_ADMIN_ROLE) {
+        uint256 balance = address(this).balance;
+        payable(to).transfer(balance);
+    }
+
+    receive() external payable {}
 }

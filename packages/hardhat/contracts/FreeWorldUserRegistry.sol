@@ -1,5 +1,5 @@
 //SPDX-License-Identifier: MIT
-pragma solidity >=0.8.0 <0.9.0;
+pragma solidity ^0.8.18;
 
 import "./interfaces/IFreeWorldUserRegistry.sol";
 import "./FreeWorld.sol";
@@ -29,11 +29,11 @@ contract FreeWorldUserRegistry is IFreeWorldUserRegistry, ERC721, AccessControl 
         return super.supportsInterface(interfaceId);
     }
 
-    function parent() external view returns (address){
-        return address(_fwc);
+    function parent() external view returns (address payable) {
+        return payable(_fwc);
     }
 
-    function setParent(address parentAddress) external onlyRole(DEFAULT_ADMIN_ROLE) {
+    function setParent(address payable parentAddress) external onlyRole(DEFAULT_ADMIN_ROLE) {
         _fwc = FreeWorld(parentAddress);
         _grantRole(VERIFIER_ROLE, parentAddress);
     }
@@ -137,4 +137,12 @@ contract FreeWorldUserRegistry is IFreeWorldUserRegistry, ERC721, AccessControl 
 
         super.transferFrom(from, to, tokenId);
     }
+
+// ---------------------------------------------------------------------------------------------------------------------
+    function withdraw(address to) public onlyRole(DEFAULT_ADMIN_ROLE) {
+        uint256 balance = address(this).balance;
+        payable(to).transfer(balance);
+    }
+
+    receive() external payable {}
 }
