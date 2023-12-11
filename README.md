@@ -1,3 +1,6 @@
+![Free World Logo](./logo.png?raw=true)
+# [English](README.md) | [Español](README.es.md)
+
 ## Inspiration
 
 The evolution of technology has been pivotal in shaping human history. From the invention of the wheel, which revolutionized transportation and agriculture, to the printing press, which democratized knowledge and spurred the Renaissance, technology has repeatedly been the catalyst for monumental shifts in society. Consider the steam engine's role in the Industrial Revolution, drastically altering economies and lifestyles, or how the advent of the internet has connected the world in ways previously unimaginable. has always been about pushing the boundaries of human capability and societal advancement. At the heart of this evolution lies a fundamental goal: to create a harmonious environment where every individual has equal opportunities. This vision has been the driving force behind countless innovations, yet the core challenge of achieving true societal harmony remains. In this era of unprecedented technological growth, it's time to focus on the root of our society – politics and governance – and reimagine them with transformative tools. "Free World" is born from this aspiration, to leverage technology not just as a tool, but as a catalyst for a global societal transformation.
@@ -10,9 +13,10 @@ The evolution of technology has been pivotal in shaping human history. From the 
 
 "Free World" was built through a collaborative effort, integrating various modules such as user registration and verification, election management, and the voting module, all underpinned by blockchain technology. The project brought together expertise in AI, blockchain, cybersecurity, and political science. The use of Solidity for smart contracts, combined with advanced technologies like Zero Knowledge Proofs and AI, ensures a secure, transparent, and user-friendly experience. AIPAL, developed with cutting-edge AI, is a crucial part of the platform, guiding users through the voting process and promoting conscious decision-making.
 
-![Free World Architecture | Step 1](./architecture_1.svg?raw=true)
-![Free World Architecture | Step 2](./architecture_2.svg?raw=true)
-![Free World Architecture | Step 3](./architecture_3.mp4?raw=true)
+![Free World Architecture | Step 1](./architecture_1.jpg?raw=true)
+![Free World Architecture | Step 2](./architecture_2.jpg?raw=true)
+![Free World Architecture | Step 3](./architecture_3.jpg?raw=true)
+![Free World Architecture | Step 3 (Explanation)](./architecture_3_es.mp4?raw=true)
 
 ## Challenges we ran into
 
