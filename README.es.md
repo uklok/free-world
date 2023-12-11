@@ -13,9 +13,9 @@ La evolución de la tecnología ha sido crucial en la conformación de la histor
 
 "Free World" se construyó a través de un esfuerzo colaborativo, integrando varios módulos como registro y verificación de usuarios, gestión de elecciones y el módulo de votación, todo respaldado por la tecnología blockchain. El proyecto reunió experiencia en IA, blockchain, ciberseguridad y ciencia política. El uso de Solidity para contratos inteligentes, combinado con tecnologías avanzadas como Pruebas de Conocimiento Cero y IA, asegura una experiencia segura, transparente y fácil de usar. AIPAL, desarrollado con IA de vanguardia, es una parte crucial de la plataforma, guiando a los usuarios a través del proceso de votación y promoviendo la toma de decisiones consciente.
 
-![Arquitectura de Free World | Paso 1](./architecture_1.jpg?raw=true)
-![Arquitectura de Free World | Paso 2](./architecture_2.jpg?raw=true)
-![Arquitectura de Free World | Paso 3](./architecture_3.jpg?raw=true)
+![Arquitectura de Free World | Paso 1](architecture/step_1.jpg?raw=true)
+![Arquitectura de Free World | Paso 2](architecture/step_2.jpg?raw=true)
+![Arquitectura de Free World | Paso 3](architecture/step_3.jpg?raw=true)
 ![Arquitectura de Free World | Paso 3 (Explicacion)](./architecture_3_es.mp4?raw=true)
 
 ## Desafíos a los que nos enfrentamos
