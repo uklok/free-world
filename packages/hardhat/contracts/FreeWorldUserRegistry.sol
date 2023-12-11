@@ -1,7 +1,8 @@
 //SPDX-License-Identifier: MIT
-pragma solidity >=0.8.0 <0.9.0;
+pragma solidity ^0.8.18;
 
 import "./interfaces/IFreeWorldUserRegistry.sol";
+import "./FreeWorld.sol";
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
@@ -14,8 +15,9 @@ contract FreeWorldUserRegistry is IFreeWorldUserRegistry, ERC721, AccessControl 
     mapping(address => bool) private minted;
 
     uint256 private _nextTokenId;
+    FreeWorld private _fwc;
 
-    constructor(address initialOwner) ERC721("Free World Registry", "FWR") {
+    constructor(address initialOwner) ERC721("Free World User Registry", "FWR") {
         _grantRole(DEFAULT_ADMIN_ROLE, initialOwner);
     }
 
@@ -27,12 +29,18 @@ contract FreeWorldUserRegistry is IFreeWorldUserRegistry, ERC721, AccessControl 
         return super.supportsInterface(interfaceId);
     }
 
+    function parent() external view returns (address payable) {
+        return payable(_fwc);
+    }
+
+    function setParent(address payable parentAddress) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        _fwc = FreeWorld(parentAddress);
+        _grantRole(VERIFIER_ROLE, parentAddress);
+    }
+
 // ---------------------------------------------------------------------------------------------------------------------
     modifier verifiedUser(address userAddress) {
-        if (!verified[userAddress]) {
-            revert NotVerifiedUser(userAddress);
-        }
-
+        if (!isVerified(userAddress)) { revert NotVerifiedUser(userAddress); }
         _;
     }
 
@@ -104,12 +112,18 @@ contract FreeWorldUserRegistry is IFreeWorldUserRegistry, ERC721, AccessControl 
      *
      * @notice Everyone must be verified before it can perform any action.
      */
-    function isRegistered(address userAddress) external view returns (bool) {
+    function isRegistered(address userAddress) public view returns (bool) {
         return registered[userAddress];
     }
 
-    function isVerified(address userAddress) external view returns (bool) {
+    function isVerified(address userAddress) public view returns (bool) {
+        if (!isRegistered(userAddress)) { revert NotRegisteredUser(userAddress); }
+
         return verified[userAddress];
+    }
+
+    function verifiedUsers() public view returns (uint256) {
+        return _nextTokenId;
     }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -123,4 +137,12 @@ contract FreeWorldUserRegistry is IFreeWorldUserRegistry, ERC721, AccessControl 
 
         super.transferFrom(from, to, tokenId);
     }
+
+// ---------------------------------------------------------------------------------------------------------------------
+    function withdraw(address to) public onlyRole(DEFAULT_ADMIN_ROLE) {
+        uint256 balance = address(this).balance;
+        payable(to).transfer(balance);
+    }
+
+    receive() external payable {}
 }
