@@ -13,10 +13,10 @@ The evolution of technology has been pivotal in shaping human history. From the 
 
 "Free World" was built through a collaborative effort, integrating various modules such as user registration and verification, election management, and the voting module, all underpinned by blockchain technology. The project brought together expertise in AI, blockchain, cybersecurity, and political science. The use of Solidity for smart contracts, combined with advanced technologies like Zero Knowledge Proofs and AI, ensures a secure, transparent, and user-friendly experience. AIPAL, developed with cutting-edge AI, is a crucial part of the platform, guiding users through the voting process and promoting conscious decision-making.
 
-![Free World Architecture | Step 1](./architecture_1.jpg?raw=true)
-![Free World Architecture | Step 2](./architecture_2.jpg?raw=true)
-![Free World Architecture | Step 3](./architecture_3.jpg?raw=true)
-![Free World Architecture | Step 3 (Explanation)](./architecture_3_es.mp4?raw=true)
+![Free World Architecture | Step 1](architecture/step_1.jpg?raw=true)
+![Free World Architecture | Step 2](architecture/step_2.jpg?raw=true)
+![Free World Architecture | Step 3](architecture/step_3.jpg?raw=true)
+![Free World Architecture | Step 3 (Explanation)](architecture/step_3.mp4?raw=true)
 
 ## Challenges we ran into
 
