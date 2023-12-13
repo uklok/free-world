@@ -16,7 +16,7 @@ La evolución de la tecnología ha sido crucial en la conformación de la histor
 ![Arquitectura de Free World | Paso 1](architecture/step_1.jpg?raw=true)
 ![Arquitectura de Free World | Paso 2](architecture/step_2.jpg?raw=true)
 ![Arquitectura de Free World | Paso 3](architecture/step_3.jpg?raw=true)
-![Arquitectura de Free World | Paso 3 (Explicacion)](./architecture_3_es.mp4?raw=true)
+[<img width="1441" alt="image" src="https://github.com/uklok/free-world/assets/897389/7967cba9-3bcf-4cfe-90a9-966370f024a5">](https://vimeo.com/893994651)
 
 ## Desafíos a los que nos enfrentamos
 
