@@ -16,7 +16,7 @@ The evolution of technology has been pivotal in shaping human history. From the 
 ![Free World Architecture | Step 1](architecture/step_1.jpg?raw=true)
 ![Free World Architecture | Step 2](architecture/step_2.jpg?raw=true)
 ![Free World Architecture | Step 3](architecture/step_3.jpg?raw=true)
-![Free World Architecture | Step 3 (Explanation)](architecture/step_3.mp4?raw=true)
+[<img width="1441" alt="image" src="https://github.com/uklok/free-world/assets/897389/7967cba9-3bcf-4cfe-90a9-966370f024a5">](https://vimeo.com/893994651)
 
 ## Challenges we ran into
 
