@@ -2,12 +2,15 @@
 pragma solidity ^0.8.0;
 
 interface IFWGatewayClient {
-    enum FWResponseState {Sent, Success, Error}
+    enum FWGResponseState {Sent, Success, Error}
 
-    struct FWGatewayResponse {
+    struct FWGResponse {
+        uint64 subscriptionId;
         address source;
-        FWResponseState state;
+        FWGResponseState state;
         bytes data;
         bytes error;
     }
+
+    function callback(bytes32 requestId) external;
 }
