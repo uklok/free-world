@@ -1,4 +1,5 @@
-import { config as envConfig } from "@chainlink/env-enc";
+// import { config as envConfig } from "@chainlink/env-enc";
+import { config as envConfig } from "dotenv";
 envConfig();
 
 import "@nomicfoundation/hardhat-toolbox";

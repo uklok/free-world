@@ -94,5 +94,5 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
 export default deployYourContract;
 
 // Tags are useful if you have multiple deploy files and only want to run one of them.
-// e.g. yarn deploy --tags YourContract
+// e.g. yarn deploy --tags FreeWorld
 deployYourContract.tags = ["FreeWorld"];
